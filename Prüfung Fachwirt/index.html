@@ -11,9 +11,6 @@
   <style>
     :root{
       --bg:#07111f;
-      --bg-soft:#0d1b2e;
-      --card:rgba(255,255,255,.08);
-      --card-2:rgba(255,255,255,.05);
       --line:rgba(255,255,255,.12);
       --text:#edf4ff;
       --muted:#a9b9cf;
@@ -210,9 +207,7 @@
       font-size:.92rem;
     }
 
-    .hero-panel{
-      padding:24px;
-    }
+    .hero-panel{padding:24px}
     .hero-panel h3{
       font-size:1.18rem;
       margin-bottom:16px;
@@ -241,10 +236,7 @@
       color:#fff;
       font-size:1rem;
     }
-    .hero-list{
-      display:grid;
-      gap:12px;
-    }
+    .hero-list{display:grid;gap:12px}
     .hero-item{
       padding:14px 16px;
       border-radius:18px;
@@ -271,18 +263,14 @@
       letter-spacing:-.03em;
       margin-bottom:12px;
     }
-    .section-head p{
-      color:var(--muted);
-    }
+    .section-head p{color:var(--muted)}
 
     .service-grid{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:20px;
     }
-    .card{
-      padding:24px;
-    }
+    .card{padding:24px}
     .icon{
       width:58px;height:58px;border-radius:18px;
       display:grid;place-items:center;
@@ -354,9 +342,7 @@
       grid-template-columns:repeat(3,1fr);
       gap:20px;
     }
-    .showcase-card{
-      padding:22px;
-    }
+    .showcase-card{padding:22px}
     .showcase-card h3{
       color:#fff;
       font-size:1.04rem;
@@ -374,9 +360,7 @@
       align-items:start;
     }
     .tracking-panel,
-    .tracking-result{
-      padding:24px;
-    }
+    .tracking-result{padding:24px}
     .tracking-panel{
       position:sticky;
       top:104px;
@@ -735,9 +719,7 @@
       grid-template-columns:.9fr 1.1fr;
       gap:24px;
     }
-    .contact-box,.contact-form{
-      padding:28px;
-    }
+    .contact-box,.contact-form{padding:28px}
     .contact-box h3,.contact-form h3{
       color:#fff;
       font-size:1.24rem;
@@ -784,6 +766,15 @@
       font-size:.92rem;
       color:var(--muted);
     }
+
+    .form-status{
+      min-height:24px;
+      font-size:.92rem;
+      font-weight:700;
+      color:#cfe5ff;
+    }
+    .form-status.error{color:#ffd8d2}
+    .form-status.success{color:#baf2d1}
 
     @media (max-width:1180px){
       nav ul{display:none}
@@ -1029,7 +1020,7 @@
         <div class="showcase-grid">
           <div class="showcase-card glass">
             <h3>Klare Kommunikation</h3>
-            <p>Wichtige Informationen werden kompakt und verständlich dargestellt — ohne den Kunden mit unnötiger Komplexität zu überladen.</p>
+            <p>Wichtige Informationen werden kompakt und verständlich dargestellt — ohne unnötige Komplexität.</p>
           </div>
           <div class="showcase-card glass">
             <h3>Transparente Prozesse</h3>
@@ -1136,7 +1127,7 @@
       <div class="container">
         <div class="section-head">
           <h2>Kontakt</h2>
-          <p>Für Transportanfragen, Rückfragen zu bestehenden Sendungen oder für allgemeine Informationen stehen wir Ihnen gern zur Verfügung.</p>
+          <p>Für Transportanfragen, Rückfragen zu bestehenden Sendungen oder allgemeine Informationen stehen wir Ihnen gern zur Verfügung.</p>
         </div>
 
         <div class="contact-grid">
@@ -1145,24 +1136,25 @@
             <p><strong>Behrensstark Spedition & Logistik</strong></p>
             <p>Musterstraße 12<br>12345 Musterstadt</p>
             <p>Telefon: +49 123 456789</p>
-            <p>E-Mail: info@behrensstark-logistik.de</p>
+            <p>E-Mail: thorstenbehrens31@gmail.com</p>
             <p>Öffnungszeiten: Montag bis Freitag, 08:00–18:00 Uhr</p>
           </div>
 
           <div class="contact-form glass" id="anfrage">
             <h3>Transportanfrage</h3>
-            <form onsubmit="event.preventDefault(); alert('Vielen Dank. Ihre Anfrage wurde erfasst und wird schnellstmöglich bearbeitet.');">
-              <input type="text" placeholder="Name" required />
-              <input type="email" placeholder="E-Mail-Adresse" required />
-              <select required>
+            <form id="contactForm">
+              <input type="text" name="name" placeholder="Name" required />
+              <input type="email" name="email" placeholder="E-Mail-Adresse" required />
+              <select name="service" required>
                 <option value="">Leistung wählen</option>
                 <option>Landfracht</option>
                 <option>Luftfracht</option>
                 <option>Seefracht</option>
                 <option>Logistik</option>
               </select>
-              <textarea placeholder="Bitte beschreiben Sie kurz Ihr Anliegen."></textarea>
+              <textarea name="message" placeholder="Bitte beschreiben Sie kurz Ihr Anliegen." required></textarea>
               <button type="submit" class="btn btn-primary" style="border:none">Anfrage senden</button>
+              <div id="formStatus" class="form-status"></div>
             </form>
           </div>
         </div>
@@ -1196,7 +1188,7 @@
           <div class="footer-title">Kontakt</div>
           <span>Musterstraße 12<br>12345 Musterstadt</span>
           <span>+49 123 456789</span>
-          <span>info@behrensstark-logistik.de</span>
+          <span>thorstenbehrens31@gmail.com</span>
         </div>
       </div>
 
@@ -1372,6 +1364,8 @@
     const updateContactLabel = document.getElementById("updateContactLabel");
     const updateContactInput = document.getElementById("updateContactInput");
     const updateContactHint = document.getElementById("updateContactHint");
+    const contactForm = document.getElementById("contactForm");
+    const formStatus = document.getElementById("formStatus");
 
     function normalize(value) {
       return value.trim().toUpperCase();
@@ -1724,7 +1718,43 @@
       renderShipment(match, mode);
     }
 
+    async function handleContactSubmit(event) {
+      event.preventDefault();
+      formStatus.textContent = "";
+      formStatus.className = "form-status";
+
+      const formData = new FormData(contactForm);
+      const payload = {
+        name: formData.get("name")?.toString().trim() || "",
+        email: formData.get("email")?.toString().trim() || "",
+        service: formData.get("service")?.toString().trim() || "",
+        message: formData.get("message")?.toString().trim() || ""
+      };
+
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result?.error || "Anfrage konnte nicht gesendet werden.");
+        }
+
+        formStatus.textContent = "Vielen Dank. Ihre Anfrage wurde erfolgreich versendet.";
+        formStatus.className = "form-status success";
+        contactForm.reset();
+      } catch (error) {
+        formStatus.textContent = error.message || "Beim Versand ist ein Fehler aufgetreten.";
+        formStatus.className = "form-status error";
+      }
+    }
+
     searchBtn.addEventListener("click", searchShipment);
+    contactForm.addEventListener("submit", handleContactSubmit);
 
     trackingInput.addEventListener("keydown", function(e) {
       if (e.key === "Enter") {
